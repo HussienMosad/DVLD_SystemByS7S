@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\ClsApplicationTypesAccess.cs" />
     <Compile Include="Countries\ClsCountryAccess.cs" />
     <Compile Include="Logger\ClsLogger.cs" />
     <Compile Include="Settings\ClsDataAccessHelper.cs" />
