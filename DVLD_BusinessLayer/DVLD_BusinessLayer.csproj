@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\ClsApplicationType.cs" />
     <Compile Include="Countries\ClsCountry.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Person\ClsPerson.cs" />
@@ -54,8 +55,6 @@
       <Name>DVLD_DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Application\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

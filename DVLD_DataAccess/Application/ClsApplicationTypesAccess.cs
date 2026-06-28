@@ -135,5 +135,35 @@ namespace DVLD_DataAccess
             return false;
 
         }
+        public static int AddNewApplicationType(string ApplicationTypeTitle, float ApplicationTypeFees)
+        {
+            int ID = -1;
+            SqlConnection connection = new SqlConnection(ClsDataAccessSettings.ConnectionString);
+            string query = @"INSERT INTO ApplicationTypes (ApplicationTypeTitle, ApplicationFees)
+                             VALUES (@ApplicationTypeTitle, @ApplicationTypeFees);
+                             SELECT SCOPE_IDENTITY();";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ApplicationTypeTitle", ApplicationTypeTitle);
+            command.Parameters.AddWithValue("@ApplicationTypeFees", ApplicationTypeFees);
+
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && int.TryParse(result.ToString(), out int insertedID))
+                    ID = insertedID;
+            }
+            catch (Exception ex)
+            {
+                // تسجيل الخطأ بداخل الـ Event Viewer
+                ClsLogger.LogError($"Failed to add new application type with title: {ApplicationTypeTitle}", ex);
+            }
+            finally { connection.Close(); }
+
+            return ID;
+        }
+
     }
 }
