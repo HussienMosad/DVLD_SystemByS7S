@@ -60,7 +60,7 @@ namespace DVLD_BusinessLayer
             );
         }
 
-        public ClsUser Find(int UserID)
+        public static ClsUser Find(int UserID)
         {
             int PersonID = -1; 
             string UserName = "";  

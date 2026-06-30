@@ -41,13 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\ClsApplicationsAccess.cs" />
     <Compile Include="Application\ClsApplicationTypesAccess.cs" />
+    <Compile Include="Application\ClsLocalDrivingLicenseApplicationsAccess.cs" />
     <Compile Include="Countries\ClsCountryAccess.cs" />
+    <Compile Include="detainedlicenses\ClsDetainedLicensesAccess.cs" />
+    <Compile Include="Driver\ClsDriversAccess.cs" />
+    <Compile Include="internationallicenses\ClsInternationalLicensesAccess.cs" />
+    <Compile Include="licenseclasses\ClsLicenseClassesAccess.cs" />
+    <Compile Include="licenses\ClsLicensesAccess.cs" />
     <Compile Include="Logger\ClsLogger.cs" />
     <Compile Include="Settings\ClsDataAccessHelper.cs" />
     <Compile Include="Settings\ClsDataAccessSettings.cs" />
     <Compile Include="Person\ClsPeopleAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="testfolder\ClsTestAppointmentsAccess.cs" />
+    <Compile Include="testfolder\ClsTestsAccess.cs" />
+    <Compile Include="testfolder\ClsTestTypesAccess.cs" />
     <Compile Include="User\ClsUsersAccess.cs" />
   </ItemGroup>
   <ItemGroup />
