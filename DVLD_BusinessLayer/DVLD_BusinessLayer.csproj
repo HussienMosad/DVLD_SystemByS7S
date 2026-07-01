@@ -52,11 +52,11 @@
     <Compile Include="license\ClsLocalLicense.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Person\ClsPerson.cs" />
+    <Compile Include="security\clsSecurity.cs" />
     <Compile Include="testfolder\ClsTest.cs" />
     <Compile Include="testfolder\ClsTestAppointment.cs" />
     <Compile Include="testfolder\ClsTestType.cs" />
     <Compile Include="User\ClsUser.cs" />
-    <Compile Include="Util\clsUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +65,5 @@
       <Name>DVLD_DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

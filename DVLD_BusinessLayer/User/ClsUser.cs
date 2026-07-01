@@ -102,12 +102,12 @@ namespace DVLD_BusinessLayer
                 return null;
         }
 
-        public DataTable GetAllUsers()
+        public static  DataTable GetAllUsers()
         {
             return ClsUsersAccess.GetAllUsers();
         }
 
-        public bool DeleteUser(int UserID)
+        public  static bool DeleteUser(int UserID)
         {
             return ClsUsersAccess.DeleteUser(UserID);
         }
@@ -173,6 +173,13 @@ namespace DVLD_BusinessLayer
             }
             return false;
         }
+
+
+        public bool ChangePassword(string NewPassword)
+        {
+            return ClsUsersAccess.ChangePassword(this.UserID, NewPassword);
+        }
+
 
     }
 }

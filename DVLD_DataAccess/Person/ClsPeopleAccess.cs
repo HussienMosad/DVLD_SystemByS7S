@@ -24,7 +24,7 @@ namespace DVLD_DataAccess
                                                                     ref string Phone,
                                                                     ref string Address,
                                                                     ref DateTime DateOfBirth,
-                                                                    ref int CountryID,
+                                                                    ref int NationalityCountryID,
                                                                     ref string ImagePath)
         {
             bool isFound = false;
@@ -61,7 +61,7 @@ namespace DVLD_DataAccess
                             Phone = ((string)reader["Phone"]).Trim();
                             Address = ((string)reader["Address"]).Trim();
                             DateOfBirth = (DateTime)reader["DateOfBirth"];
-                            CountryID = (int)reader["CountryID"];
+                            NationalityCountryID = (int)reader["NationalityCountryID"];
 
                         }
                         else
@@ -81,7 +81,7 @@ namespace DVLD_DataAccess
         public static bool GetPersonInfoByNationalNO(string NationalNo, ref int PersonID, ref string FirstName,
                                              ref string SecondName, ref string ThirdName, ref string LastName,
                                              ref string Gender, ref string Email, ref string Phone,
-                                             ref string Address, ref DateTime DateOfBirth, ref int CountryID,
+                                             ref string Address, ref DateTime DateOfBirth, ref int NationalityCountryID,
                                              ref string ImagePath)
         {
             bool isFound = false;
@@ -118,7 +118,7 @@ namespace DVLD_DataAccess
                             Phone = ((string)reader["Phone"]).Trim();
                             Address = ((string)reader["Address"]).Trim();
                             DateOfBirth = (DateTime)reader["DateOfBirth"];
-                            CountryID = (int)reader["CountryID"];
+                            NationalityCountryID = (int)reader["NationalityCountryID"];
 
                         }
                         else
@@ -140,12 +140,12 @@ namespace DVLD_DataAccess
         public static int AddNewPerson(string NationalNo, string FirstName, string SecondName,
                                         string ThirdName, string LastName, string Gender,
                                         string Email, string Phone, string Address,
-                                        DateTime DateOfBirth, int CountryID, string ImagePath)
+                                        DateTime DateOfBirth, int NationalityCountryID, string ImagePath)
         {
             int ID = -1;
 
-            string query = @"INSERT INTO People (NationalNo,FirstName,SecondName,ThirdName,LastName,Gender, Email, Phone, Address,DateOfBirth, CountryID,ImagePath)
-                             VALUES (@NationalNo,@FirstName,@SecondName,@ThirdName ,@LastName,@Gender, @Email, @Phone, @Address,@DateOfBirth, @CountryID,@ImagePath);
+            string query = @"INSERT INTO People (NationalNo,FirstName,SecondName,ThirdName,LastName,Gender, Email, Phone, Address,DateOfBirth, NationalityCountryID,ImagePath)
+                             VALUES (@NationalNo,@FirstName,@SecondName,@ThirdName ,@LastName,@Gender, @Email, @Phone, @Address,@DateOfBirth, @NationalityCountryID,@ImagePath);
                              SELECT SCOPE_IDENTITY();";
             using (SqlConnection connection = new SqlConnection(ClsDataAccessSettings.ConnectionString))
             {
@@ -168,7 +168,7 @@ namespace DVLD_DataAccess
 
                 cmd.Parameters.AddWithValue("@Address", Address);
                 cmd.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
-                cmd.Parameters.AddWithValue("@CountryID", CountryID);
+                cmd.Parameters.AddWithValue("@NationalityCountryID", NationalityCountryID);
 
 
                 try
@@ -183,7 +183,7 @@ namespace DVLD_DataAccess
                 }
                 catch
                 {
-
+                    throw;
                 }
 
                      }
@@ -202,7 +202,7 @@ namespace DVLD_DataAccess
                                                         string Phone,
                                                         string Address,
                                                         DateTime DateOfBirth,
-                                                        int CountryID,
+                                                        int NationalityCountryID,
                                                         string ImagePath
             )
         {
@@ -219,7 +219,7 @@ namespace DVLD_DataAccess
                          Phone = @Phone,
                          Address = @Address,
                          DateOfBirth = @DateOfBirth,
-                         CountryID = @CountryID,
+                         NationalityCountryID = @NationalityCountryID,
                          ImagePath = @ImagePath
                      WHERE PersonID = @PersonID";
 
@@ -243,7 +243,7 @@ namespace DVLD_DataAccess
                     command.Parameters.AddWithValue("@Phone", Phone);
                     command.Parameters.AddWithValue("@Address", Address);
                     command.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
-                    command.Parameters.AddWithValue("@CountryID", CountryID);
+                    command.Parameters.AddWithValue("@NationalityCountryID", NationalityCountryID);
 
                     command.Parameters.AddWithValue("@ImagePath", ClsDataAccessHelper.HandleDBNull(ImagePath));
 
@@ -264,23 +264,29 @@ namespace DVLD_DataAccess
         public static DataTable GetAllPeople() 
         {
             DataTable Dt = new DataTable();
-            string Query =
-               @"SELECT People.PersonID, People.NationalNo,
-              People.FirstName, People.SecondName, People.ThirdName, People.LastName, 
-              People.Email, People.Phone,People.Address,
-			  People.DateOfBirth,
-				  CASE
-                  WHEN People.Gender = 'm' THEN 'Male'
-
-                  ELSE 'Female'
-
-                  END as Gender,
-			   
-              People.CountryID, Countries.CountryName, People.ImagePath
-              FROM            People INNER JOIN
-                         Countries ON People.CountryID = Countries.CountryID
+                            string Query =
+                  @"SELECT 
+                    People.PersonID,
+                    People.NationalNo,
+                    People.FirstName,
+                    People.SecondName,
+                    People.ThirdName,
+                    People.LastName,
+                    People.Email,
+                    People.Phone,
+                    People.Address,
+                    People.DateOfBirth,
+                    CASE
+                        WHEN People.Gender = 'm' THEN 'Male'
+                        ELSE 'Female'
+                    END AS Gender,
+                    People.NationalityCountryID,
+                    Countries.CountryName,
+                    People.ImagePath
+                FROM People
+                INNER JOIN Countries
+                    ON People.NationalityCountryID = Countries.CountryID
                 ORDER BY People.FirstName";
-
             try
             {
                 using (SqlConnection connection =
@@ -300,11 +306,11 @@ namespace DVLD_DataAccess
                 }
             }
 
-            catch
+           
+                catch (Exception ex)
             {
-
+                throw;
             }
-
            
             return Dt;
 

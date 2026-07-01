@@ -179,6 +179,7 @@ namespace DVLD_DataAccess
                 catch(Exception ex)
                 {
                     ClsLogger.LogError($"Failed to Add User With PersonID : {PersonID}");
+                    throw;
                 }
 
             }
@@ -209,6 +210,7 @@ namespace DVLD_DataAccess
                 {
                     ClsLogger.LogError($"Failed To Update User With UserID : {UserID}", ex);
                     return false;
+                    throw;
                 }
 
 
