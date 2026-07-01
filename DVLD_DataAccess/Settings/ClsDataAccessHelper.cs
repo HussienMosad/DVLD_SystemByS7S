@@ -15,14 +15,13 @@ using System.Threading.Tasks;
                     ? DBNull.Value
                     : value ?? DBNull.Value;
             }
+        public static string HandleDBNullToString(object value)
+        {
+            if (value == DBNull.Value)
+                return string.Empty;
 
-            public static string HandleDBNullToString(object value)
-            {
-                if (value == DBNull.Value)
-                    return null;
-
-                return value.ToString();
-            }
+            return value.ToString().Trim();
+        }
         public static char ConvertGenderToDB(string gender)
         {
             return gender.ToUpper() == "FEMALE" ? 'F' : 'M';

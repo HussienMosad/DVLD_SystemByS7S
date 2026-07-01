@@ -10,56 +10,61 @@ namespace DVLD_DataAccess
 {
     public  class ClsDriversAccess
     {
-        public static bool GetDriverInfoByID(int DriverID , ref int PersonID, ref int CreatedByUserID, ref DateTime CreatedDate) {
-            bool isfound = false;
-            string query = "select * from Drivers WHERE DriverID = @DriverID";
+        public static bool GetDriverInfoByID(int DriverID, ref int PersonID,
+     ref int CreatedByUserID, ref DateTime CreatedDate)
+        {
+            bool isFound = false;
 
-            using (SqlConnection connectiom = new SqlConnection(ClsDataAccessSettings.ConnectionString))
+            string query = @"SELECT *
+                     FROM Drivers
+                     WHERE DriverID = @DriverID";
+
+            using (SqlConnection connection = new SqlConnection(ClsDataAccessSettings.ConnectionString))
             {
-               
-                using(SqlCommand cmd = new SqlCommand(query , connectiom))
+                using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@DriverID", DriverID);
 
                     try
                     {
-                        using(SqlDataReader reader = cmd.ExecuteReader())
+                        connection.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                isfound = true;
+                                isFound = true;
+
                                 PersonID = (int)reader["PersonID"];
                                 CreatedByUserID = (int)reader["CreatedByUserID"];
                                 CreatedDate = (DateTime)reader["CreatedDate"];
                             }
                         }
-
                     }
-                    catch
+                    catch (Exception ex)
                     {
-
+                        throw;
                     }
-
                 }
-
             }
 
-            return isfound;
+            return isFound;
         }
 
         public static bool GetDriverInfoByPersonID(int PersonID, ref int DriverID, ref int CreatedByUserID, ref DateTime CreatedDate) {
             bool isfound = false;
             string query = "select * from Drivers WHERE PersonID = @PersonID";
 
-            using (SqlConnection connectiom = new SqlConnection(ClsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ClsDataAccessSettings.ConnectionString))
             {
 
-                using (SqlCommand cmd = new SqlCommand(query, connectiom))
+                using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@PersonID", PersonID);
 
                     try
                     {
+                        connection.Open();
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
